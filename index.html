@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Finding Spaces</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Josefin+Sans:wght@100;200;300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest: #2C4A35;
+    --forest-dark: #1a2e20;
+    --forest-light: #3d6b4a;
+    --maroon: #6B2737;
+    --maroon-light: #8a3345;
+    --gold: #C9A84C;
+    --gold-light: #e8c97a;
+    --cream: #F5F0E8;
+    --cream-dark: #ede5d5;
+    --near-black: #1C1C1A;
+    --ink: #2a2a27;
+    --text-body: #3a3832;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Cormorant Garamond', serif;
+    background: var(--cream);
+    color: var(--near-black);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAVIGATION ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center;
+    height: 64px;
+    padding: 0 4rem;
+    background: rgba(28,28,26,0.97);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+
+  .nav-links {
+    display: flex; align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 200;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cream);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ─── HERO ─── */
+  #home {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 64px;
+  }
+
+  .hero-cream {
+    background: var(--cream);
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: 5rem 4rem 5rem 6rem;
+    position: relative;
+  }
+
+  .hero-cream::after {
+    content: '';
+    position: absolute; top: 0; right: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+  }
+
+  .hero-tagline {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 100;
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+  }
+
+  .hero-welcome {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 2rem;
+    line-height: 1.45;
+    color: var(--maroon);
+    margin-bottom: 2.5rem;
+    opacity: 0; transform: translateY(30px);
+    animation: fadeUp 1.2s ease forwards 0.4s;
+  }
+
+  .hero-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: var(--text-body);
+    margin-bottom: 2.5rem;
+    opacity: 0; transform: translateY(20px);
+    animation: fadeUp 1.2s ease forwards 0.8s;
+  }
+
+  .hero-coda {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--forest);
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    border-left: 2px solid var(--gold);
+    padding-left: 1.2rem;
+    opacity: 0;
+    animation: fadeUp 1.2s ease forwards 1.1s;
+  }
+
+  .btn-group {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 1.2s ease forwards 1.4s;
+  }
+
+  .btn-primary {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 0.8rem 2rem;
+    background: var(--forest);
+    color: var(--cream);
+    border: none; cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.3s, color 0.3s;
+  }
+  .btn-primary:hover { background: var(--forest-dark); }
+
+  .btn-outline {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 0.8rem 2rem;
+    background: transparent;
+    color: var(--forest);
+    border: 1px solid var(--forest);
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.3s, color 0.3s;
+  }
+  .btn-outline:hover { background: var(--forest); color: var(--cream); }
+
+  .hero-green {
+    background: var(--forest);
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    padding: 5rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-green::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: 
+      radial-gradient(ellipse at 30% 40%, rgba(201,168,76,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 80%, rgba(107,39,55,0.12) 0%, transparent 50%);
+  }
+
+  .ornamental-frame {
+    position: relative; z-index: 1;
+    border: 1px solid rgba(201,168,76,0.4);
+    padding: 4rem 3rem;
+    text-align: center;
+  }
+
+  .ornamental-frame::before, .ornamental-frame::after {
+    content: '✦';
+    position: absolute;
+    color: var(--gold);
+    font-size: 1.2rem;
+  }
+  .ornamental-frame::before { top: -0.7rem; left: 50%; transform: translateX(-50%); background: var(--forest); padding: 0 0.5rem; }
+  .ornamental-frame::after { bottom: -0.7rem; left: 50%; transform: translateX(-50%); background: var(--forest); padding: 0 0.5rem; }
+
+  .hero-title-main {
+    font-family: 'IM Fell English', serif;
+    font-size: 3.2rem;
+    color: var(--cream);
+    line-height: 1.2;
+    margin-bottom: 0.8rem;
+    opacity: 0;
+    animation: fadeIn 1.5s ease forwards 0.2s;
+  }
+
+  .hero-subtitle {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 100;
+    letter-spacing: 0.4em;
+    font-size: 0.8rem;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeIn 1.5s ease forwards 0.6s;
+  }
+
+  .gold-line {
+    width: 60px; height: 1px;
+    background: var(--gold);
+    margin: 1.5rem auto;
+    opacity: 0;
+    animation: expandWidth 1s ease forwards 1s;
+  }
+
+  @keyframes expandWidth { from { width: 0; opacity: 0; } to { width: 60px; opacity: 1; } }
+
+  .hero-quote {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: rgba(245,240,232,0.7);
+    line-height: 1.7;
+    opacity: 0;
+    animation: fadeIn 1.5s ease forwards 1.2s;
+  }
+
+  /* ─── BELIEFS SECTION ─── */
+  #beliefs {
+    background: var(--maroon);
+    padding: 6rem 6rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #beliefs::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 40px,
+      rgba(255,255,255,0.015) 40px,
+      rgba(255,255,255,0.015) 41px
+    );
+  }
+
+  .beliefs-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem; position: relative; z-index: 1;
+  }
+
+  .beliefs-left h2 {
+    font-family: 'IM Fell English', serif;
+    font-size: 2.4rem;
+    color: var(--cream);
+    line-height: 1.3;
+    margin-bottom: 2rem;
+  }
+
+  .beliefs-left h2::first-letter {
+    font-size: 4.5rem;
+    float: left;
+    line-height: 0.85;
+    margin-right: 0.1em;
+    color: var(--gold);
+  }
+
+  .beliefs-left p {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: rgba(245,240,232,0.85);
+  }
+
+  .beliefs-right {
+    display: flex; flex-direction: column; justify-content: center;
+    gap: 2rem;
+  }
+
+  .focus-area {
+    padding: 1.5rem 0;
+    border-top: 1px solid rgba(201,168,76,0.35);
+  }
+
+  .focus-area:last-child { border-bottom: 1px solid rgba(201,168,76,0.35); }
+
+  .focus-label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 200;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+  }
+
+  .focus-desc {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: rgba(245,240,232,0.8);
+  }
+
+  /* ─── OUR STORY ─── */
+  #story {
+    padding: 7rem 6rem;
+    background: var(--cream-dark);
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: center;
+    max-width: 100%;
+  }
+
+  .story-image-wrap {
+    position: relative;
+  }
+
+  .story-image-wrap::before {
+    content: '';
+    position: absolute;
+    top: 1.5rem; left: 1.5rem; right: -1.5rem; bottom: -1.5rem;
+    border: 1px solid var(--gold);
+    z-index: 0;
+  }
+
+  .story-image-wrap img {
+    position: relative; z-index: 1;
+    width: 100%; aspect-ratio: 3/4;
+    object-fit: cover;
+    object-position: top center;
+    filter: sepia(15%) contrast(1.05);
+    display: block;
+  }
+
+  .story-content { padding: 2rem 0; }
+
+  .section-label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 200;
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 1.5rem;
+  }
+
+  .story-content h2 {
+    font-family: 'IM Fell English', serif;
+    font-size: 2.6rem;
+    color: var(--forest-dark);
+    line-height: 1.2;
+    margin-bottom: 1.2rem;
+  }
+
+  .story-content .founder-line {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--maroon);
+    margin-bottom: 1.5rem;
+  }
+
+  .story-content p {
+    font-size: 1rem;
+    line-height: 1.9;
+    color: var(--text-body);
+    margin-bottom: 1.2rem;
+  }
+
+  /* ─── ARCHIVE ─── */
+  #archive {
+    padding: 7rem 6rem;
+    background: var(--near-black);
+  }
+
+  .archive-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .archive-header h2 {
+    font-family: 'IM Fell English', serif;
+    font-size: 2.6rem;
+    color: var(--cream);
+    margin-bottom: 0.8rem;
+  }
+
+  .archive-header p {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 200;
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .gold-rule {
+    width: 80px; height: 1px;
+    background: var(--gold);
+    margin: 1.5rem auto;
+  }
+
+  .archive-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    max-width: 1200px; margin: 0 auto;
+  }
+
+  .archive-card {
+    background: rgba(245,240,232,0.04);
+    border: 1px solid rgba(201,168,76,0.15);
+    padding: 2.5rem 2rem;
+    text-decoration: none;
+    display: block;
+    transition: background 0.3s, border-color 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .archive-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 3px; height: 0;
+    background: var(--gold);
+    transition: height 0.4s;
+  }
+
+  .archive-card:hover::before { height: 100%; }
+  .archive-card:hover { background: rgba(245,240,232,0.08); border-color: rgba(201,168,76,0.4); }
+
+  .archive-card-tag {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 200;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .archive-card h3 {
+    font-family: 'IM Fell English', serif;
+    font-size: 1.25rem;
+    color: var(--cream);
+    line-height: 1.4;
+    margin-bottom: 1rem;
+  }
+
+  .archive-card p {
+    font-size: 0.9rem;
+    color: rgba(245,240,232,0.55);
+    line-height: 1.7;
+  }
+
+  .archive-card .read-more {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 200;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: inline-block;
+    margin-top: 1.5rem;
+    border-bottom: 1px solid rgba(201,168,76,0.4);
+    padding-bottom: 2px;
+  }
+
+  .archive-cta {
+    text-align: center;
+    margin-top: 3rem;
+  }
+
+  .btn-gold {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 0.9rem 2.5rem;
+    background: transparent;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.3s, color 0.3s;
+  }
+  .btn-gold:hover { background: var(--gold); color: var(--near-black); }
+
+  /* ─── COLLABORATE ─── */
+  #collaborate {
+    padding: 7rem 6rem;
+    background: var(--cream);
+  }
+
+  .collab-inner { max-width: 1200px; margin: 0 auto; }
+
+  .collab-top {
+    margin-bottom: 5rem;
+  }
+
+  .collab-left {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .collab-left h2 {
+    font-family: 'IM Fell English', serif;
+    font-size: 2.6rem;
+    color: var(--forest-dark);
+    line-height: 1.25;
+    margin-bottom: 1.5rem;
+  }
+
+  .collab-left p {
+    font-size: 1rem;
+    line-height: 1.9;
+    color: var(--text-body);
+    margin-bottom: 1.2rem;
+  }
+
+  .collab-left .coda-text {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--maroon);
+    line-height: 1.8;
+    max-width: 600px;
+    margin: 1.5rem auto 0;
+  }
+
+  .socials-grid {
+    display: flex; flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem; margin-bottom: 2.5rem;
+  }
+
+  .social-tile {
+    display: flex; align-items: center; justify-content: center; gap: 1rem;
+    flex: 0 1 220px;
+    padding: 1.2rem 1.5rem;
+    border: 1px solid rgba(44,74,53,0.2);
+    text-decoration: none;
+    transition: border-color 0.3s, background 0.3s;
+    background: transparent;
+  }
+  .social-tile:hover { border-color: var(--forest); background: rgba(44,74,53,0.04); }
+
+  .social-icon {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--forest);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .social-icon svg { width: 16px; height: 16px; fill: var(--cream); }
+
+  .social-info { overflow: hidden; }
+  .social-name {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--forest-dark);
+    display: block;
+  }
+  .social-handle {
+    font-size: 0.85rem;
+    color: rgba(44,74,53,0.6);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+
+  .subscribe-strip {
+    background: var(--forest);
+    padding: 3rem 6rem;
+    text-align: center;
+  }
+
+  .subscribe-strip p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: rgba(245,240,232,0.8);
+    margin-bottom: 1.2rem;
+  }
+
+  .subscribe-strip .btn-primary {
+    background: var(--gold);
+    color: var(--near-black);
+  }
+  .subscribe-strip .btn-primary:hover { background: var(--gold-light); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--near-black);
+    padding: 3rem 6rem;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(201,168,76,0.2);
+  }
+
+  .footer-logo img { height: 40px; }
+
+  .footer-copy {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 100;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: rgba(245,240,232,0.4);
+    text-transform: uppercase;
+  }
+
+  .footer-tagline {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: rgba(201,168,76,0.6);
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* Ornamental divider */
+  .ornament {
+    text-align: center;
+    color: var(--gold);
+    font-size: 1rem;
+    letter-spacing: 0.5em;
+    margin: 2rem 0;
+    opacity: 0.6;
+  }
+
+  @media (max-width: 900px) {
+    #home, .beliefs-inner, #story {
+      grid-template-columns: 1fr;
+    }
+    .archive-grid { grid-template-columns: 1fr; }
+    .social-tile { flex: 1 1 100%; }
+    nav { padding: 0 1.5rem; }
+    #beliefs, #archive, #collaborate, #story { padding: 4rem 2rem; }
+    .hero-cream { padding: 3rem 2rem; }
+    .hero-green { padding: 4rem 2rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+    .subscribe-strip { padding: 3rem 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#story">Our Story</a></li>
+    <li><a href="#archive">Archive</a></li>
+    <li><a href="#collaborate">Collaborate</a></li>
+  </ul>
+</nav>
+
+<!-- ═══ HOME ═══ -->
+<section id="home">
+  <div class="hero-green">
+    <div class="ornamental-frame">
+      <h1 class="hero-title-main">Project<br>Finding Spaces</h1>
+      <p class="hero-subtitle">Art &nbsp;·&nbsp; Law &nbsp;·&nbsp; Memory</p>
+      <div class="gold-line"></div>
+      <p class="hero-quote">This is for those who carry stories. This is for those who are still searching for space.<br>Where art remembers.</p>
+    </div>
+  </div>
+
+  <div class="hero-cream">
+    <p class="hero-welcome">Welcome to a journey through art, history, law, memory and all the stories in between.</p>
+    <p class="hero-body">Project Finding Spaces is an evolving cross-disciplinary research, public scholarship, and storytelling platform to explore how art and material culture interact with history, international law, public memory, cultural heritage, identity, conflict, and the political 'other'. The hope is for it to act as an archival museum, an educational space, and a community resource. It is to carry forward and preserve the memory of what once was, through what still remains — art, objects, spaces, and stories.<br><br>This project is an invitation to witness and remember, with critical thinking analysis of what is lost and what is preserved. An exploration through essays on cultural erasure, narratives of survival and remembrance, memories through war art, analysis of stolen cultural property, and meditations on the political life of art.</p>
+    <div class="btn-group">
+      <a href="https://projectfindingspaces.substack.com/" target="_blank" class="btn-primary">Explore Our Research</a>
+      <a href="https://projectfindingspaces.substack.com/" target="_blank" class="btn-outline">Subscribe on Substack</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ BELIEFS ═══ -->
+<section id="beliefs">
+  <div class="beliefs-inner">
+    <div class="beliefs-left reveal">
+      <h2>What We Believe Spaces Hold</h2>
+      <div class="ornament">— ✦ —</div>
+      <p>Project Finding Spaces was born from a conviction that the spaces between disciplines — between art history and legal scholarship, between archives and oral memory, between loss and restitution — are precisely where the most urgent questions live.</p>
+      <br>
+      <p>We believe that understanding these histories is part of how justice gets imagined, and eventually made. And we wish to understand it through art and material culture.</p>
+    </div>
+    <div class="beliefs-right reveal">
+      <div class="focus-area">
+        <span class="focus-label">Public Memory</span>
+        <p class="focus-desc">Exploring how art, objects, archives, and material culture preserve personal and collective memory across generations.</p>
+      </div>
+      <div class="focus-area">
+        <span class="focus-label">Restitution &amp; Cultural Heritage</span>
+        <p class="focus-desc">Tracing how societies remember and forget through the placement, displacement, destruction, and return of art and artefacts.</p>
+      </div>
+      <div class="focus-area">
+        <span class="focus-label">International Law</span>
+        <p class="focus-desc">Investigating how law, human rights, colonial histories, museums, institutions, and states shape narratives of belonging, ownership, trauma, and visibility.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ OUR STORY ═══ -->
+<section id="story">
+  <div class="story-image-wrap reveal">
+    <img src="images/founder-portrait.jpg" alt="Sanchita Aggarwal, Founder of Project Finding Spaces">
+  </div>
+  <div class="story-content reveal">
+    <span class="section-label">Our Story</span>
+    <h2>Project Finding Spaces was founded by Sanchita Aggarwal in 2022.</h2>
+    <p class="founder-line"> Lawyer &nbsp;·&nbsp; Researcher &nbsp;·&nbsp; Writer &nbsp;·&nbsp; Artist</p>
+    <div class="ornament" style="text-align:left; margin: 1rem 0;">— ✦ —</div>
+    <p>Finding my vision as a lawyer studying law and conflict with an interest in human rights, art, intellectual property, political movements, while also unfolding my additional identity as an artist, I understood the world of art through a different perspective: I understood where trauma lies and how conflicts undo and inform reality. It is the art and objects which hold memory, and hold the (real) reality in front of all.</p>
+    <p>There is a saying that history is written by the victors. Across time, we do not know so many stories and never might, but it is art which brings us closer to them. It captures human moments and emotions, allowing one to see or imagine how even a bystander may be feeling. It is art which acts as a continuing source of inspiration, information, survival, existence, suffering, joy, public memory and anything else which may have been.</p>
+    <p>It holds stories and it witnesses. It also compels us to question more, to wonder why, and to explore. Both making and preserving art is an act of power, one which is on the side of humanity. And through Project Finding Spaces, I hope to find and bring exactly that to the forefront: more stories and art, rooted in this feeling. I hope to have more people join in and for this to become an interactive community project with time.</p>
+  </div>
+</section>
+
+<!-- ═══ ARCHIVE ═══ -->
+<section id="archive">
+  <div class="archive-header reveal">
+    <span class="section-label" style="color: var(--gold);">Archive</span>
+    <h2>Research, Essays &amp; Curated Case Studies</h2>
+    <div class="gold-rule"></div>
+    <p>Scholarship at the intersection of art, law, and memory</p>
+  </div>
+
+  <div class="archive-grid">
+    <a href="https://projectfindingspaces.substack.com/p/when-paintings-were-law-mapa-de-cuauhtinchan" target="_blank" class="archive-card reveal">
+      <span class="archive-card-tag">Essay · Legal History</span>
+      <h3>When Paintings Were Law: Mapa de Cuauhtinchan</h3>
+      <p>An exploration of how pre-colonial Mesoamerican cartographic paintings functioned as legal documents and how their displacement challenges contemporary restitution frameworks.</p>
+      <span class="read-more">Read Essay →</span>
+    </a>
+
+    <a href="https://projectfindingspaces.substack.com/p/how-do-we-remember-a-species-whose" target="_blank" class="archive-card reveal">
+      <span class="archive-card-tag">Essay · Memory &amp; Ecology</span>
+      <h3>How Do We Remember a Species Whose Archive Is Also Its Wound?</h3>
+      <p>A meditation on ecological loss, archival silence, and the ways material culture carries the memory of what has disappeared from the natural world.</p>
+      <span class="read-more">Read Essay →</span>
+    </a>
+
+    <a href="https://projectfindingspaces.substack.com/p/propaganda-in-orbit-visual-culture" target="_blank" class="archive-card reveal">
+      <span class="archive-card-tag">Essay · Visual Culture</span>
+      <h3>Propaganda in Orbit: Visual Culture and the Space Race</h3>
+      <p>Examining how states weaponised visual culture and artistic production during the Space Race as instruments of ideological dominance and soft power.</p>
+      <span class="read-more">Read Essay →</span>
+    </a>
+  </div>
+
+  <div class="archive-cta reveal">
+    <a href="https://projectfindingspaces.substack.com/" target="_blank" class="btn-gold">View Full Archive on Substack</a>
+  </div>
+</section>
+
+<!-- ═══ COLLABORATE ═══ -->
+<section id="collaborate">
+  <div class="collab-inner">
+    <div class="collab-top">
+      <div class="collab-left reveal">
+        <span class="section-label">Collaborate</span>
+        <h2>Be a part of a community of people who deeply care.</h2>
+        <p>We welcome collaborations with researchers, lawyers, archivists, curators, journalists, and anyone whose work touches the spaces we explore. Reach out to pitch a piece, propose a project, or simply begin a conversation.</p>
+        <div class="ornament">— ✦ —</div>
+        <p class="coda-text">And if you've ever seen or owned an object, an artwork, or a piece of material culture that made you feel something deeper — about culture, loss, or identity — I'd love to hear about it sometime. Your stories will help build a public repository preserving these narratives: an act of memory against forgetting.</p>
+        <p style="margin-top:1.2rem; font-style:italic; color: var(--maroon);">In memory and in resistance. Thank you.</p>
+
+        <div style="margin-top: 2rem;">
+          <span class="section-label">Find Us</span>
+          <div class="socials-grid" style="margin-top: 1rem;">
+            <a href="https://projectfindingspaces.substack.com/" target="_blank" class="social-tile">
+              <div class="social-icon">
+                <svg viewBox="0 0 24 24"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>
+              </div>
+              <div class="social-info">
+                <span class="social-name">Substack</span>
+                <span class="social-handle">projectfindingspaces</span>
+              </div>
+            </a>
+            <a href="https://www.instagram.com/projectfindingspaces/" target="_blank" class="social-tile">
+              <div class="social-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              </div>
+              <div class="social-info">
+                <span class="social-name">Instagram</span>
+                <span class="social-handle">@projectfindingspaces</span>
+              </div>
+            </a>
+            <a href="https://www.linkedin.com/in/sanchitaaggarwal/" target="_blank" class="social-tile">
+              <div class="social-icon">
+                <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              </div>
+              <div class="social-info">
+                <span class="social-name">LinkedIn</span>
+                <span class="social-handle">Sanchita Aggarwal</span>
+              </div>
+            </a>
+            <a href="mailto:projectfindingspaces@gmail.com" class="social-tile">
+              <div class="social-icon">
+                <svg viewBox="0 0 24 24"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 010 19.366V5.457c0-.904.732-1.636 1.636-1.636h.749L12 11.73l9.615-7.909h.749c.904 0 1.636.732 1.636 1.636z"/></svg>
+              </div>
+              <div class="social-info">
+                <span class="social-name">Email</span>
+                <span class="social-handle">projectfindingspaces@gmail.com</span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Subscribe Strip -->
+<div class="subscribe-strip">
+  <p>Subscribe to get full access to essays, case studies, and the curated archive. Every new edition goes directly to your inbox.</p>
+  <a href="https://projectfindingspaces.substack.com/" target="_blank" class="btn-primary">Subscribe on Substack</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-copy">© 2026 Project Finding Spaces. All rights reserved.</span>
+  <span class="footer-tagline">Art. Law. Memory.</span>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
